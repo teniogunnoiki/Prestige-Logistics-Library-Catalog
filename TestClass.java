@@ -13,7 +13,8 @@ public class TestClass {
         // Create library catalog in admin mode
         LibraryCatalog<LibraryItem> library = new LibraryCatalog<>("Admin Mode");
         Stack<Action> undoStack = new Stack<>();
-        Warehouse warehouse = new Warehouse();
+        Warehouse<Shipment> warehouse = new Warehouse<>();
+        AVLTree<LibraryItem> libraryItemAVLTree = new AVLTree<>();
 
         // Add initial book items to catalog
         library.addItem(new Book(1001, "Five Dialogues", "Plato", "2002", "Physical"));
@@ -28,6 +29,10 @@ public class TestClass {
         library.addItem(new Video(1006, "Hidden Figures", 127));
         library.addItem(new Video(1308, "Charlotte's Web", 97));
         library.addItem(new Video(1010, "Harry Potter and the Sorcerer's Stone", 152));
+
+        for (LibraryItem item : library.getAllItems()) {
+            libraryItemAVLTree.insert(item);
+        }
 
         // Main menu loop
         while (session) {
@@ -45,6 +50,7 @@ public class TestClass {
             System.out.println("7. Undo Last Action");
             System.out.println("8. Search for an Item or Shipment");
             System.out.println("9. View Performance");
+            System.out.println("10. AVL Tree");
             System.out.println("0. Exit");
             System.out.print("Enter menu option: ");
 
@@ -93,6 +99,8 @@ public class TestClass {
                     String category = s1.nextLine();
 
                     library.addItem(new Book(lastIndex++, title, author, publishDate, category));
+                    libraryItemAVLTree.insert(new Book(lastIndex++, title, author, publishDate, category)); // add to AVL
+
                     undoStack.push(new Action("ADD_ITEM", lastIndex - 1));
                     System.out.println("\nBook Added!");
                 }
@@ -108,6 +116,8 @@ public class TestClass {
                     double duration = s1.nextDouble();
 
                     library.addItem(new Video(lastIndex++, title, duration));
+                    libraryItemAVLTree.insert(new Video(lastIndex++, title, duration));
+
                     undoStack.push(new Action("ADD_ITEM", lastIndex - 1));
                     System.out.println("\nVideo Added!");
                 }
@@ -153,6 +163,7 @@ public class TestClass {
                     int itemID = s1.nextInt();
                     s1.nextLine();
                     library.addItemToShipment(itemID, newShipmentID);
+                    warehouse.addShipment(newShipment);
                     undoStack.push(new Action("ADD_TO_SHIPMENT", itemID));
 
                 } else if (choice1 == 2) {
@@ -313,6 +324,23 @@ public class TestClass {
                 test.sort(SortUtils.compareByID);
                 long end3 =  System.nanoTime();
                 System.out.println("Java Sort Time: " + ((end3- start3)/1000000.0) + " ms");
+
+            }
+            else if (choice == 10) {
+                System.out.print("Enter Item ID to search: ");
+                int id = s1.nextInt();
+                s1.nextLine();
+
+                // Create dummy object (only ID matters)
+                LibraryItem dummy = new Book(id, "", "", "", "");
+
+                boolean found = libraryItemAVLTree.search(dummy);
+
+                if (found != false) {
+                    System.out.println("Found: " + found);
+                } else {
+                    System.out.println("Item not found.");
+                }
 
             }
 
