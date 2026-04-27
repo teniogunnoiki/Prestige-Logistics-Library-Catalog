@@ -374,6 +374,18 @@ public class TestClass {
                 }
 
             }
+                 else if (choice == 11){
+                System.out.print("Enter Shipment ID: ");
+                int id = s1.nextInt();
+
+                Shipment s = library.getShipmentByID(id);
+
+                if (s != null) {
+                    System.out.println("Found: " + s.toString());
+                } else {
+                    System.out.println("Shipment not found.");
+                }
+            }
 
             // Option 0: Exit program
             else if (choice == 0) {
