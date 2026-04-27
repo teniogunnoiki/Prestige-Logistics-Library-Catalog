@@ -30,6 +30,8 @@ public class TestClass {
         library.addItem(new Video(1308, "Charlotte's Web", 97));
         library.addItem(new Video(1010, "Harry Potter and the Sorcerer's Stone", 152));
 
+        //add initial items to AVL Tree
+
         for (LibraryItem item : library.getAllItems()) {
             libraryItemAVLTree.insert(item);
         }
@@ -50,7 +52,8 @@ public class TestClass {
             System.out.println("7. Undo Last Action");
             System.out.println("8. Search for an Item or Shipment");
             System.out.println("9. View Performance");
-            System.out.println("10. AVL Tree");
+            System.out.println("10. AVL Tree for Library");
+            System.out.println("11. HashMap for Shipment");
             System.out.println("0. Exit");
             System.out.print("Enter menu option: ");
 
@@ -98,8 +101,9 @@ public class TestClass {
                     System.out.println("Digital or Physical: ");
                     String category = s1.nextLine();
 
-                    library.addItem(new Book(lastIndex++, title, author, publishDate, category));
-                    libraryItemAVLTree.insert(new Book(lastIndex++, title, author, publishDate, category)); // add to AVL
+                    Book newBook = new Book(lastIndex++, title, author, publishDate, category);
+                    library.addItem(newBook);
+                    libraryItemAVLTree.insert(newBook); // add to AVL
 
                     undoStack.push(new Action("ADD_ITEM", lastIndex - 1));
                     System.out.println("\nBook Added!");
@@ -115,8 +119,9 @@ public class TestClass {
                     System.out.println("Duration of Video: ");
                     double duration = s1.nextDouble();
 
-                    library.addItem(new Video(lastIndex++, title, duration));
-                    libraryItemAVLTree.insert(new Video(lastIndex++, title, duration));
+                    Video newVid = new Video(lastIndex++, title, duration);
+                    library.addItem(newVid);
+                    libraryItemAVLTree.insert(newVid);
 
                     undoStack.push(new Action("ADD_ITEM", lastIndex - 1));
                     System.out.println("\nVideo Added!");
@@ -129,10 +134,12 @@ public class TestClass {
 
                 System.out.println("\nWhich Item would you like to remove by ID: ");
                 int item = s1.nextInt();
-
-                library.findAndRemoveItem(item);
-                undoStack.push(new Action("REMOVE_ITEM", item));// Remove selected item
                 s1.nextLine(); // Clear buffer
+                //remove from library Catalog
+                library.findAndRemoveItem(item);
+
+                undoStack.push(new Action("REMOVE_ITEM", item));// Remove selected item
+
             }
             // Option 4: Create shipment and add item to it
             else if (choice == 4) {
@@ -327,6 +334,8 @@ public class TestClass {
 
             }
             else if (choice == 10) {
+                System.out.println("AVL Tree In-order traversal Sorted by Type, then ID: ");
+                libraryItemAVLTree.inorder();
                 System.out.print("Enter Item ID to search: ");
                 int id = s1.nextInt();
                 s1.nextLine();
@@ -336,8 +345,9 @@ public class TestClass {
 
                 boolean found = libraryItemAVLTree.search(dummy);
 
-                if (found != false) {
+                if (found) {
                     System.out.println("Found: " + found);
+
                 } else {
                     System.out.println("Item not found.");
                 }
