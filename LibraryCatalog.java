@@ -1,3 +1,71 @@
+Skip to content
+teniogunnoiki
+Prestige-Logistics-Library-Catalog
+Repository navigation
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security and quality
+Insights
+Settings
+Prestige-Logistics-Library-Catalog
+/
+LibraryCatalog.java
+in
+Teni-Branch---avl-and-hashing
+
+Edit
+
+Preview
+Indent mode
+
+Spaces
+Indent size
+
+4
+Line wrap mode
+
+No wrap
+Editing LibraryCatalog.java file contents
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
 import java.util.ArrayList;
 import java.util.Collections;
 public class LibraryCatalog<T extends LibraryItem> {
@@ -34,73 +102,4 @@ public class LibraryCatalog<T extends LibraryItem> {
     public void findAndRemoveItem(int item) {
         boolean found = items.removeIf(s1 -> s1.getItemID() == item);
         if (found) {
-            System.out.println("Item Removed!");
-        } else {
-            System.out.println("Item not found.");
-        }
-    }
-
-    public void sortLibrary() {
-        Collections.sort(items);
-    }
-
-    public void displayShipments() {
-        for (Shipment s : shipments) {
-            System.out.println(s.toString());
-        }
-    }
-
-    public void createShipment(Shipment shipment) {
-        if (shipment == null) {
-            System.out.println("Cannot add null shipment!");
-            return;
-        }
-        shipments.add(shipment);
-        System.out.println("Shipment " + shipment.getShipmentID() + " added to catalog.");
-    }
-
-    public Shipment findShipment(int shipmentID) {
-        for (Shipment s : shipments) {
-            if (s.getShipmentID() == shipmentID) {
-                return s;
-            }
-        }
-        return null;
-    }
-
-    public void displayItemsInShipment(int shipmentID) {
-        Shipment shipment = findShipment(shipmentID);
-        if (shipment == null) {
-            System.out.println("Shipment not found.");
-            return;
-        }
-        shipment.displayItems();
-    }
-
-    public void addItemToShipment(int itemID, int shipmentID) {
-        Shipment shipment = findShipment(shipmentID);
-        if (shipment == null) {
-            System.out.println("Shipment not found.");
-            return;
-        }
-        for (int i=0;i<items.size();i++) {
-            if (items.get(i).getItemID() == itemID) {
-                shipment.addItem(items.get(i));
-                items.remove(i);
-                System.out.println("Item moved to shipment.");
-                return;
-            }
-        }
-        System.out.println("Item not found in library.");
-    }
-
-    public Shipment removeShipment(int shipmentID) {
-       Shipment shipment = findShipment(shipmentID);
-       if(shipment ==null){
-           System.out.println("Shipment not found.");
-       }
-       shipments.remove(shipment);
-       System.out.println("Shipment removed.");
-        return shipment;
-    }
-    }
+Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
