@@ -97,7 +97,7 @@ public class AVLTree<E extends Comparable<E>> implements Tree<E> {
     @Override
     public int getSize() { return size; }
 
-    @Override
+    
     public boolean isEmpty() { return size == 0; }
 
     @Override

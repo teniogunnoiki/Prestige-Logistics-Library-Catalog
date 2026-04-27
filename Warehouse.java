@@ -1,21 +1,22 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Warehouse {
+public class Warehouse<T> {
 
     private int warehouseID;
     private String location;
-    private List<Shipment> shipments;
+    private List<T> items;
 
-    public Warehouse(){
+    public Warehouse() {
         this.warehouseID = 0;
         this.location = "Unknown";
-        this.shipments = new ArrayList<>();
+        this.items = new ArrayList<>();
     }
+
     public Warehouse(int warehouseID, String location) {
         this.warehouseID = warehouseID;
         this.location = location;
-        this.shipments = new ArrayList<>();
+        this.items = new ArrayList<>();
     }
 
     public int getWarehouseID() {
@@ -26,23 +27,15 @@ public class Warehouse {
         return location;
     }
 
-    public void addShipment(Shipment shipment) {
-        shipments.add(shipment);
+    public void addShipment(T item) {
+        items.add(item);
     }
 
-    public Shipment findShipment(int shipmentID) {
-        for (Shipment s : shipments) {
-            if (s.getShipmentID() == shipmentID) {
-                return s;
-            }
-        }
-        return null;
+    public T findShipment(int index) {
+        return items.get(index);
     }
 
-    public List<Shipment> getShipments() {
-        return shipments;
+    public List<T> getShipments() {
+        return items;
     }
-
-
-
 }
