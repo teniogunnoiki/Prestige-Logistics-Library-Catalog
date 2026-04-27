@@ -1,10 +1,13 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+
 public class LibraryCatalog<T extends LibraryItem> {
     private String librarySession;
     private ArrayList<T> items = new ArrayList<>();
     private ArrayList<Shipment> shipments = new ArrayList<>();
     private ArrayList<Warehouse> warehouses = new ArrayList<>();
+    private HashMap<Integer, Shipment> shipmentTracker = new HashMap<>();
 
     public LibraryCatalog(){this.librarySession = "User Mode";}
     public LibraryCatalog(String librarySession) {
@@ -59,11 +62,16 @@ public class LibraryCatalog<T extends LibraryItem> {
     }
 
     public void createShipment(Shipment shipment) {
+        int id = shipment.getShipmentID();
+        if(shipmentTracker.containsKey(id)){
+            System.out.println("Shipment ID already exists");
+        }
         if (shipment == null) {
             System.out.println("Cannot add null shipment!");
             return;
         }
         shipments.add(shipment);
+        shipmentTracker.put(shipment.getShipmentID(),shipment);
         System.out.println("Shipment " + shipment.getShipmentID() + " added to catalog.");
     }
 
@@ -111,5 +119,7 @@ public class LibraryCatalog<T extends LibraryItem> {
        System.out.println("Shipment removed.");
         return shipment;
     }
-
+    public Shipment getShipmentByID(int shipID) {
+        return shipmentTracker.get(shipID);
+    }
     }
