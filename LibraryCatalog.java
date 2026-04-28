@@ -3,11 +3,11 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class LibraryCatalog<T extends LibraryItem> {
-    private String librarySession;
-    private ArrayList<T> items = new ArrayList<>();
-    private ArrayList<Shipment> shipments = new ArrayList<>();
-    private ArrayList<Warehouse> warehouses = new ArrayList<>();
-    private HashMap<Integer, Shipment> shipmentTracker = new HashMap<>();
+    private final String librarySession;
+    private final ArrayList<T> items = new ArrayList<>();
+    private final ArrayList<Shipment> shipments = new ArrayList<>();
+    private final ArrayList<Warehouse> warehouses = new ArrayList<>();
+    private final HashMap<Integer, Shipment> shipmentTracker = new HashMap<>();
 
     public LibraryCatalog(){this.librarySession = "User Mode";}
     public LibraryCatalog(String librarySession) {
@@ -32,7 +32,7 @@ public class LibraryCatalog<T extends LibraryItem> {
         return items;
     }
 
-
+    public ArrayList<Shipment> getAllShipments(){return shipments;}
 
     public LibraryItem findAndRemoveItem(int itemID) {
 
