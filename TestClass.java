@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.*;
 
 public class TestClass {
-
     public static void main(String[] args) {
         Scanner s1 = new Scanner(System.in);
         // Controls main program loop
@@ -35,9 +34,7 @@ public class TestClass {
         for (LibraryItem item : library.getAllItems()) {
             libraryItemAVLTree.insert(item);
         }
-
-
-
+        
         // Main menu loop
         while (session) {
 
