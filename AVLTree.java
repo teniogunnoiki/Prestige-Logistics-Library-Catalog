@@ -15,7 +15,7 @@ public class AVLTree<E extends Comparable<E>> implements Tree<E> {
         }
     }
 
-    /** --- BST & Tree Interface Implementation --- **/
+    // Tree interface implementation
 
     @Override
     public boolean search(E e) {
@@ -209,7 +209,7 @@ public class AVLTree<E extends Comparable<E>> implements Tree<E> {
         updateHeight((AVLTreeNode<E>) C);
     }
 
-    /** --- Traversals --- **/
+    //Traversals
 
     @Override
     public void inorder() { inorder(root); }
