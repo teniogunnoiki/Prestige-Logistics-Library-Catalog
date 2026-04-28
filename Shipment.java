@@ -11,7 +11,6 @@ public class Shipment {
     public static final String DEFAULT_STATUS = "Pending";
 
 
-
     public Shipment(){
         this.shipmentID = 0;
         this.status = "Pending";
