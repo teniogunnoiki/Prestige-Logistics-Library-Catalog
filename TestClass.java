@@ -334,24 +334,57 @@ public class TestClass {
 
             }
             else if (choice == 10) {
-                System.out.println("AVL Tree In-order traversal Sorted by Type, then ID: ");
-                libraryItemAVLTree.inorder();
-                System.out.print("Enter Item ID to search: ");
-                int id = s1.nextInt();
-                s1.nextLine();
+                System.out.println("AVL Tree Implementation! ");
+                System.out.println("Choose an Option");
+                System.out.println("1.View Tree In-Order (By type then ID)");
+                System.out.println("2.Search Item (By Id)");
+                System.out.println("3. Delete Item (By ID)");
+                int avl = s1.nextInt();
+                if(avl ==1){
+                    System.out.println("Viewing AVL Library");
+                    libraryItemAVLTree.inorder();
+                } else if (avl==2) {
+                    System.out.print("Enter Item ID to search: ");
+                    int id = s1.nextInt();
+                    s1.nextLine();
 
-                // Create dummy object (only ID matters)
-                LibraryItem dummy = new Book(id, "", "", "", "");
+                    // Create dummy object (only ID matters)
+                    LibraryItem dummy = new Book(id, "", "", "", "");
 
-                boolean found = libraryItemAVLTree.search(dummy);
+                    boolean found = libraryItemAVLTree.search(dummy);
 
-                if (found) {
-                    System.out.println("Found: " + found);
+                    if (found) {
+                        System.out.println("Found: " + found);
 
-                } else {
-                    System.out.println("Item not found.");
+                    } else {
+                        System.out.println("Item not found.");
+                    }
+                }
+                else if(avl==3) {
+                    System.out.print("Enter Item ID to delete: ");
+                    int id = s1.nextInt();
+                    s1.nextLine();
+                    LibraryItem remove =library.findAndRemoveItem(id);
+                    if(remove!=null){
+                        libraryItemAVLTree.delete(remove);
+                    }
+                }
+                else{
+                    System.out.println("Invalid option");
                 }
 
+            }
+                 else if (choice == 11){
+                System.out.print("Enter Shipment ID: ");
+                int id = s1.nextInt();
+
+                Shipment s = library.getShipmentByID(id);
+
+                if (s != null) {
+                    System.out.println("Found: " + s.toString());
+                } else {
+                    System.out.println("Shipment not found.");
+                }
             }
 
             // Option 0: Exit program
