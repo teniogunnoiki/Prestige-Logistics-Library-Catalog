@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Comparator;
 
 public class AVLTree<E extends Comparable<E>> implements Tree<E> {
+    private Comparator<E> comparator;
     protected TreeNode<E> root;
     protected int size = 0;
 
-    public AVLTree() {
-    }
+    public AVLTree(){}
 
     public AVLTree(E[] objects) {
         for (E object : objects) {
@@ -14,7 +15,7 @@ public class AVLTree<E extends Comparable<E>> implements Tree<E> {
         }
     }
 
-    /** --- BST & Tree Interface Implementation --- **/
+    // Tree interface implementation
 
     @Override
     public boolean search(E e) {
@@ -97,13 +98,13 @@ public class AVLTree<E extends Comparable<E>> implements Tree<E> {
     @Override
     public int getSize() { return size; }
 
-    
+    @Override
     public boolean isEmpty() { return size == 0; }
 
     @Override
     public void clear() { root = null; size = 0; }
 
-    /** --- AVL Balancing Logic --- **/
+ //balancing
 
     private void balancePath(E e) {
         ArrayList<TreeNode<E>> path = getPath(e);
@@ -150,7 +151,7 @@ public class AVLTree<E extends Comparable<E>> implements Tree<E> {
         return list;
     }
 
-    /** --- Rotations --- **/
+  //balancing by rotation
 
     private void balanceLL(TreeNode<E> A, TreeNode<E> parentOfA) {
         TreeNode<E> B = A.left;
@@ -208,14 +209,14 @@ public class AVLTree<E extends Comparable<E>> implements Tree<E> {
         updateHeight((AVLTreeNode<E>) C);
     }
 
-    /** --- Traversals --- **/
+    //Traversals
 
     @Override
     public void inorder() { inorder(root); }
     private void inorder(TreeNode<E> node) {
         if (node == null) return;
         inorder(node.left);
-        System.out.print(node.element + " ");
+        System.out.println(node.element.toString()+ " ");
         inorder(node.right);
     }
     @Override
@@ -235,8 +236,7 @@ public class AVLTree<E extends Comparable<E>> implements Tree<E> {
         @Override public E next() { return list.get(current++); }
     }
 
-    /** --- Node Structures --- **/
-
+    //Nodes
     public static class TreeNode<E> {
         protected E element;
         protected TreeNode<E> left, right;
