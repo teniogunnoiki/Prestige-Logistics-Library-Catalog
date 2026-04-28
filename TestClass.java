@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.ArrayList;
+import java.util.*;
 
 public class TestClass {
 
@@ -25,16 +26,17 @@ public class TestClass {
 
         // Add initial video items to catalog
         library.addItem(new Video(1004, "Harriet", 125));
+        library.addItem(new Video(1005, "Java Tutorials", 157));
         library.addItem(new Video(1011, "Microsoft Excel Training 2017", 55));
         library.addItem(new Video(1006, "Hidden Figures", 127));
         library.addItem(new Video(1308, "Charlotte's Web", 97));
         library.addItem(new Video(1010, "Harry Potter and the Sorcerer's Stone", 152));
-
         //add initial items to AVL Tree
-
         for (LibraryItem item : library.getAllItems()) {
             libraryItemAVLTree.insert(item);
         }
+
+
 
         // Main menu loop
         while (session) {
@@ -139,7 +141,6 @@ public class TestClass {
                 library.findAndRemoveItem(item);
 
                 undoStack.push(new Action("REMOVE_ITEM", item));// Remove selected item
-
             }
             // Option 4: Create shipment and add item to it
             else if (choice == 4) {
@@ -151,7 +152,6 @@ public class TestClass {
 
                 System.out.print("");
                 if (choice1 == 1) {
-
 
                     // Get shipment details
                     System.out.print("Enter new Shipment ID: ");
@@ -199,9 +199,8 @@ public class TestClass {
                 if(removed != null){
                     undoStack.push(new Action("REMOVE_SHIPMENT", removed));
                 }
-
             }
-            // Option 6: View all shipments
+            // Option 6: View all
             else if (choice == 6) {
 
                 System.out.println("What do you want to view? ");
@@ -210,11 +209,9 @@ public class TestClass {
                 System.out.println("3. View Items in Shipments");
                 int choice2 = s1.nextInt();
 
-                if (choice2 == 1)
-                    library.displayLibrary();
+                if (choice2 == 1) library.displayLibrary();
 
-                else if (choice2 == 2)
-                    library.displayShipments();
+                else if (choice2 == 2) library.displayShipments();
 
                 else if (choice2 == 3) {
                     library.displayShipments(); // show them the list first
@@ -222,8 +219,6 @@ public class TestClass {
                     int shipmentID = s1.nextInt();
                     library.displayItemsInShipment(shipmentID);
                 }
-
-
             }
             //Option 7: undo item to shipment or catalog
             else if (choice == 7) {
@@ -275,8 +270,6 @@ public class TestClass {
                 for (LibraryItem item : library.getAllItems()) {
                     System.out.println(item.getDetails());
                 }
-
-
                 SortUtils.quickSort(library.getAllItems(), 0, library.getAllItems().size() - 1, SortUtils.compareByID);
                 System.out.print("Are you searching for (1) book or (2)video? Enter an integer: ");
                 int ans = s1.nextInt();
@@ -306,7 +299,6 @@ public class TestClass {
                     System.out.println("Item not found.");
                 }
             }
-
             //Option 9: performance testing
             else if (choice == 9) {
                 //generates large dataset of book objects
@@ -331,7 +323,6 @@ public class TestClass {
                 test.sort(SortUtils.compareByID);
                 long end3 =  System.nanoTime();
                 System.out.println("Java Sort Time: " + ((end3- start3)/1000000.0) + " ms");
-
             }
             else if (choice == 10) {
                 System.out.println("AVL Tree Implementation! ");
@@ -372,21 +363,95 @@ public class TestClass {
                 else{
                     System.out.println("Invalid option");
                 }
-
             }
-                 else if (choice == 11){
-                System.out.print("Enter Shipment ID: ");
-                int id = s1.nextInt();
+            else if (choice == 11) {
+                boolean trackerMenu = true;
+                while (trackerMenu) {
+                    System.out.println("\n==== Shipment Tracker (HashMap) ====");
+                    System.out.println("1. View All Shipments");
+                    System.out.println("2. Search Shipment by ID");
+                    System.out.println("3. Delete Shipment by ID");
+                    System.out.println("4. Update Shipment Status");
+                    System.out.println("0. Back to Main Menu");
+                    System.out.print("Enter option: ");
 
-                Shipment s = library.getShipmentByID(id);
+                    int subChoice = s1.nextInt();
+                    s1.nextLine();
 
-                if (s != null) {
-                    System.out.println("Found: " + s.toString());
-                } else {
-                    System.out.println("Shipment not found.");
+                    // View all shipments
+                    if (subChoice == 1) {
+                        library.displayShipments();
+                    }
+                    //Search shipment
+                    else if (subChoice == 2) {
+                        System.out.print("Enter Shipment ID: ");
+                        int id = s1.nextInt();
+
+                        Shipment s = library.getShipmentByID(id);
+
+                        if (s != null) {
+                            System.out.println("Shipment found:");
+                            System.out.println(s);
+                        } else {
+                            System.out.println("Shipment not found.");
+                        }
+                    }
+                    // Delete shipment
+                    else if (subChoice == 3) {
+                        System.out.print("Enter Shipment ID to delete: ");
+                        int id = s1.nextInt();
+
+                        Shipment removed = library.removeShipment(id);
+
+                        if (removed != null) {
+                            System.out.println("Shipment deleted successfully.");
+                        }
+                    }
+                    // Update shipment status
+                    else if (subChoice == 4) {
+                        System.out.print("Enter Shipment ID: ");
+                        int id = s1.nextInt();
+                        s1.nextLine();
+
+                        Shipment ship= library.getShipmentByID(id);
+
+                        if (ship == null) {
+                            System.out.println("Shipment not found.");
+                            continue;
+                        }
+
+                        System.out.println("Choose new status:");
+                        System.out.println("1. CREATED");
+                        System.out.println("2. IN_TRANSIT");
+                        System.out.println("3. DELIVERED");
+
+                        int statusChoice = s1.nextInt();
+
+                        switch (statusChoice) {
+                            case 1:
+                                ship.updateStatus("Created");
+                                break;
+                            case 2:
+                                ship.updateStatus("In Transit");
+                                break;
+                            case 3:
+                                ship.deliverShipment();
+                                break;
+                            default:
+                                System.out.println("Invalid choice.");
+                                continue;
+                        }
+                        System.out.println("Shipment status updated!");
+                    }
+                    // Exit submenu
+                    else if (subChoice == 0) {
+                        trackerMenu = false;
+                    }
+                    else {
+                        System.out.println("Invalid option.");
+                    }
                 }
             }
-
             // Option 0: Exit program
             else if (choice == 0) {
                 session = false;
