@@ -2,13 +2,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 public class LibraryCatalog<T extends LibraryItem> {
     private String librarySession;
+
     private ArrayList<T> items = new ArrayList<>();
     private ArrayList<Shipment> shipments = new ArrayList<>();
     private ArrayList<Warehouse> warehouses = new ArrayList<>();
+    private LibraryDeliveryGraph deliveryGraph;
 
-    public LibraryCatalog(){this.librarySession = "User Mode";}
+    public LibraryCatalog(){
+        this.librarySession = "User Mode";
+        this.deliveryGraph = buildDeliveryNetwork();
+    
+    }
     public LibraryCatalog(String librarySession) {
         this.librarySession = librarySession;
+        this.deliveryGraph = buildDeliveryNetwork(); 
     }
 
     public void addItem(T item) {
@@ -103,4 +110,33 @@ public class LibraryCatalog<T extends LibraryItem> {
        System.out.println("Shipment removed.");
         return shipment;
     }
+
+    private LibraryDeliveryGraph buildDeliveryNetwork() {
+        LibraryDeliveryGraph g = new LibraryDeliveryGraph();
+        g.addVertex("Main Campus Library");
+        g.addVertex("Science & Engineering");
+        g.addVertex("Law Library");
+        g.addVertex("Medical School Library");
+        g.addVertex("Graduate Research Center");
+        g.addVertex("East Campus Library");
+        g.addVertex("Central Warehouse");
+
+        g.addEdge("Main Campus Library",      "Science & Engineering",     8);
+        g.addEdge("Main Campus Library",      "Law Library",              12);
+        g.addEdge("Main Campus Library",      "Graduate Research Center",  6);
+        g.addEdge("Main Campus Library",      "East Campus Library",      20);
+        g.addEdge("Science & Engineering",    "Medical School Library",   10);
+        g.addEdge("Science & Engineering",    "Graduate Research Center",  5);
+        g.addEdge("Law Library",              "Graduate Research Center", 14);
+        g.addEdge("Medical School Library",   "East Campus Library",      15);
+        g.addEdge("Medical School Library",   "Central Warehouse",        30);
+        g.addEdge("East Campus Library",      "Central Warehouse",        25);
+        g.addEdge("Graduate Research Center", "East Campus Library",      18);
+        return g;
     }
+
+    public LibraryDeliveryGraph getDeliveryGraph() {
+        return deliveryGraph;
+    }
+
+}

@@ -1,7 +1,7 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
-import java.util.ArrayList;
 
 public class TestClass {
 
@@ -54,6 +54,7 @@ public class TestClass {
             System.out.println("9. View Performance");
             System.out.println("10. AVL Tree for Library");
             System.out.println("11. HashMap for Shipment");
+            System.out.println("12. Delivery Network(Weighted Graph)");
             System.out.println("0. Exit");
             System.out.print("Enter menu option: ");
 
@@ -353,6 +354,29 @@ public class TestClass {
                 }
 
             }
+
+            else if (choice == 12) {
+    LibraryDeliveryGraph graph = library.getDeliveryGraph();
+    System.out.println("1. View network  2. Fastest route  3. Dijkstra all  4. BFS  5. DFS");
+    int g = s1.nextInt(); s1.nextLine();
+
+    if (g == 1) {
+        graph.printGraph();
+    } else if (g == 2) {
+        System.out.print("From: "); String from = s1.nextLine();
+        System.out.print("To: ");   String to   = s1.nextLine();
+        graph.findFastestRoute(from, to);
+    } else if (g == 3) {
+        System.out.print("Starting branch: "); String from = s1.nextLine();
+        graph.dijkstra(from);
+    } else if (g == 4) {
+        System.out.print("Starting branch: "); String from = s1.nextLine();
+        graph.bfs(from);
+    } else if (g == 5) {
+        System.out.print("Starting branch: "); String from = s1.nextLine();
+        graph.dfs(from);
+    }
+}
 
             // Option 0: Exit program
             else if (choice == 0) {
